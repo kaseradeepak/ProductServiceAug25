@@ -1,7 +1,6 @@
 package com.scaler.productserviceaug25.controllers;
 
 import com.scaler.productserviceaug25.models.Product;
-import com.scaler.productserviceaug25.services.FakeStoreProductService;
 import com.scaler.productserviceaug25.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class ProductController {
     // localhost:8080/products
     @GetMapping()
     public List<Product> getAllProducts() {
-        return new ArrayList<>();
+        return productService.getAllProducts();
     }
 
     // localhost:8080/products
