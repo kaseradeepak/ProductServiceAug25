@@ -1,5 +1,6 @@
 package com.scaler.productserviceaug25.services;
 
+import com.scaler.productserviceaug25.exceptions.ProductNotFoundException;
 import com.scaler.productserviceaug25.models.Category;
 import com.scaler.productserviceaug25.models.Product;
 import dtos.FakeStoreProductDto;
@@ -37,9 +38,11 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(Long productId) {
+    public Product getSingleProduct(Long productId) throws ProductNotFoundException {
         //make a http call to fakestore api to get the product with the given id.
         // https://fakestoreapi.com/products/1
+
+//        throw new RuntimeException("Something went wrong");
 
         ResponseEntity<FakeStoreProductDto> responseEntity =
                 restTemplate.getForEntity(
@@ -47,7 +50,15 @@ public class FakeStoreProductService implements ProductService {
                         FakeStoreProductDto.class
                 );
 
-        return convertFakeStoreProductDtoToProduct(responseEntity.getBody());
+        FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+
+        if (fakeStoreProductDto == null) {
+            //Invalid productId.
+            throw new ProductNotFoundException(productId);
+        }
+
+
+        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
@@ -61,10 +72,6 @@ public class FakeStoreProductService implements ProductService {
     }
 
     private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
-        if (fakeStoreProductDto == null) {
-            return null;
-        }
-
         Product product = new Product();
         product.setTitle(fakeStoreProductDto.getTitle());
         product.setDescription(fakeStoreProductDto.getDescription());
