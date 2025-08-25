@@ -3,13 +3,9 @@ package com.scaler.productserviceaug25.controllers;
 import com.scaler.productserviceaug25.exceptions.ProductNotFoundException;
 import com.scaler.productserviceaug25.models.Product;
 import com.scaler.productserviceaug25.services.ProductService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // localhost:8080/products
@@ -18,7 +14,7 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -38,6 +34,17 @@ public class ProductController {
 //                    HttpStatus.INTERNAL_SERVER_ERROR
 //            );
 //        }
+
+//        System.out.println("DEBUG");
+//        Product product = productService.getSingleProduct(productId); // @16640
+//
+//        Product p = new Product(); // @16736
+//        p.setId(productId);
+//        p.setTitle("iPhone 14 pro max.");
+//        p.setDescription("iPhone 14 pro max.");
+//        p.setPrice(130000.0);
+//
+//        return p;
 
         return productService.getSingleProduct(productId);
 

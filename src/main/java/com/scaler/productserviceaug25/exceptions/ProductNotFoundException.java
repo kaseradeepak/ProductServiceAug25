@@ -7,6 +7,10 @@ public class ProductNotFoundException extends Exception {
         this.productId = productId;
     }
 
+    public ProductNotFoundException() {
+
+    }
+
     public Long getProductId() {
         return productId;
     }

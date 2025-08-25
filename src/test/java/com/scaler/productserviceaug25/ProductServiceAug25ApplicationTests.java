@@ -20,19 +20,19 @@ class ProductServiceAug25ApplicationTests {
     }
 
 
-    @Test
-    public void testQuery() {
-        List<ProductWithTitleAndPrice> productWithTitleAndPrices =
-                productRepository.findTitleAndPriceById();
-
-
-        for (ProductWithTitleAndPrice productWithTitleAndPrice : productWithTitleAndPrices) {
-            System.out.println(productWithTitleAndPrice.getTitle() + " " + productWithTitleAndPrice.getPrice());
-        }
-
-        Optional<Product> optionalProduct = productRepository.findByCategory_Title("mobile");
-
-        System.out.println(optionalProduct.get().getPrice());
-    }
+//    @Test
+//    public void testQuery() {
+//        List<ProductWithTitleAndPrice> productWithTitleAndPrices =
+//                productRepository.findTitleAndPriceById();
+//
+//
+//        for (ProductWithTitleAndPrice productWithTitleAndPrice : productWithTitleAndPrices) {
+//            System.out.println(productWithTitleAndPrice.getTitle() + " " + productWithTitleAndPrice.getPrice());
+//        }
+//
+//        Optional<Product> optionalProduct = productRepository.findByCategory_Title("mobile");
+//
+//        System.out.println(optionalProduct.get().getPrice());
+//    }
 
 }

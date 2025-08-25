@@ -3,7 +3,7 @@ package com.scaler.productserviceaug25.services;
 import com.scaler.productserviceaug25.exceptions.ProductNotFoundException;
 import com.scaler.productserviceaug25.models.Category;
 import com.scaler.productserviceaug25.models.Product;
-import dtos.FakeStoreProductDto;
+import com.scaler.productserviceaug25.dtos.FakeStoreProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
