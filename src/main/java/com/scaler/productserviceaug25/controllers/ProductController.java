@@ -1,9 +1,12 @@
 package com.scaler.productserviceaug25.controllers;
 
+import com.scaler.productserviceaug25.commons.AuthCommons;
 import com.scaler.productserviceaug25.exceptions.ProductNotFoundException;
 import com.scaler.productserviceaug25.models.Product;
 import com.scaler.productserviceaug25.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +22,8 @@ public class ProductController {
     }
 
     // localhost:8080/products/1
-    @GetMapping("/{productId}")
-    public Product getSingleProduct(@PathVariable("productId") Long productId) throws ProductNotFoundException {
+    @GetMapping("/{productId}/{tokenValue}")
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, @PathVariable("tokenValue") String tokenValue) throws ProductNotFoundException {
 //        try {
 //            Product product = productService.getSingleProduct(productId);
 //
@@ -46,8 +49,16 @@ public class ProductController {
 //
 //        return p;
 
-        return productService.getSingleProduct(productId);
+        Product product = null;
+        ResponseEntity<Product> responseEntity = null;
+        if (AuthCommons.validateToken(tokenValue)) {
+            product = productService.getSingleProduct(productId);
+            responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity<>(product, HttpStatus.UNAUTHORIZED);
+        }
 
+        return responseEntity;
         // HTTPStatus Code - 200, 404, 403, 500, 429, ....
     }
 
