@@ -4,6 +4,7 @@ import com.scaler.productserviceaug25.exceptions.ProductNotFoundException;
 import com.scaler.productserviceaug25.models.Category;
 import com.scaler.productserviceaug25.models.Product;
 import com.scaler.productserviceaug25.dtos.FakeStoreProductDto;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -70,6 +71,11 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product replaceProduct(Long productId, Product product) {
+        return null;
+    }
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
         return null;
     }
 
