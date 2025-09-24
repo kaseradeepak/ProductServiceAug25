@@ -16,7 +16,7 @@ public class AuthCommons {
     public static boolean validateToken(String tokenValue) {
         //Call the UserService to validate the token.
         UserDto userDto =  restTemplate.getForObject(
-                "http://localhost:8080/users/validate/" + tokenValue,
+                "http://localhost:9000/users/validate/" + tokenValue,
                 UserDto.class
         );
 
