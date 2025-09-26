@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -16,14 +17,17 @@ import java.util.List;
 @RequestMapping("/products") // endpoint - /products
 public class ProductController {
     private ProductService productService;
+    private RestTemplate restTemplate;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             RestTemplate restTemplate) {
         this.productService = productService;
+        this.restTemplate = restTemplate;
     }
 
     // localhost:8080/products/1
-    @GetMapping("/{productId}/{tokenValue}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, @PathVariable("tokenValue") String tokenValue) throws ProductNotFoundException {
+    @GetMapping("/{productId}")
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId) throws ProductNotFoundException {
 //        try {
 //            Product product = productService.getSingleProduct(productId);
 //
@@ -49,14 +53,25 @@ public class ProductController {
 //
 //        return p;
 
+        System.out.println("getSingleProduct API called in ProductController!");
+
+        //make a demo call to User
+        //Instead of hardcoding the url of UserService, we should fetch the list of
+        //IP addresses of UserService from Service Discovery and then make a call
+        //to UserService in a load balanced way.
+        restTemplate.getForEntity(
+                "http://userservicesept25/users/sample",
+                Void.class
+        );
+
         Product product = null;
         ResponseEntity<Product> responseEntity = null;
-        if (AuthCommons.validateToken(tokenValue)) {
+//        if (AuthCommons.validateToken(tokenValue)) {
             product = productService.getSingleProduct(productId);
             responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-        } else {
+//        } else {
             responseEntity = new ResponseEntity<>(product, HttpStatus.UNAUTHORIZED);
-        }
+//        }
 
         return responseEntity;
         // HTTPStatus Code - 200, 404, 403, 500, 429, ....
